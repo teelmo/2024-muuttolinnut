@@ -24,7 +24,7 @@ function Live({ data }) {
         </div>
         <div className="live_feed">
           {
-            data && data[0].map_feed.map(el => (
+            data && data[0].map_feed_example.map(el => (
               <div className="live_feed_content" key={uuid4()}>
                 <h4 className="date">{el.date}</h4>
                 <h3 className="title">{el.title}</h3>
