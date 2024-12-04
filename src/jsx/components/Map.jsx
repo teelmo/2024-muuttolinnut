@@ -24,8 +24,8 @@ function Map({ update, values }) {
   const tracedata = useRef({ 'type': 'FeatureCollection', 'features': [{ 'type': 'Feature', 'properties': {}, 'geometry': { 'type': 'LineString', 'coordinates': [] } }] });
   const curvedLineDataPoint = useRef([]);
   const curvedLineDataPointPredicted = useRef([]);
-  const map1 = useRef(false);
-  const map1Container = useRef(null);
+  const map = useRef(false);
+  const mapContainer = useRef(null);
 
   const calculateBearing = (start, end) => {
     const coordinates1 = start;
@@ -35,8 +35,7 @@ function Map({ update, values }) {
     const lat1 = turf.degreesToRadians(coordinates1[1]);
     const lat2 = turf.degreesToRadians(coordinates2[1]);
     const a = Math.sin(lon2 - lon1) * Math.cos(lat2);
-    const b = Math.cos(lat1) * Math.sin(lat2)
-            - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+    const b = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
 
     return turf.radiansToDegrees(Math.atan2(a, b));
   };
@@ -45,17 +44,17 @@ function Map({ update, values }) {
     const routeDistance = turf.lineDistance(curvedLineDataPoint.current);
     setOdometer(Math.round(routeDistance));
 
-    map1.current = new mapboxgl.Map({
+    map.current = new mapboxgl.Map({
       // center: lineDataPoint[0], // starting position [lng, lat]
       center: lineDataPoint[lineDataPoint.length - 1], // starting position [lng, lat]
-      container: map1Container.current, // container ID
+      container: mapContainer.current,
       language: 'fi',
       style: 'mapbox://styles/mapbox/satellite-streets-v11', // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-      zoom: 4 // starting zoom
+      zoom: 4 // Starting zoom
     });
-    map1.current.on('load', () => {
-      map1.current.addControl(new mapboxgl.NavigationControl());
-      map1.current.addSource('LineString', {
+    map.current.on('load', () => {
+      map.current.addControl(new mapboxgl.NavigationControl());
+      map.current.addSource('LineString', {
         data: {
           geometry: {
             coordinates: curvedLineDataPoint.current.geometry.coordinates,
@@ -67,7 +66,7 @@ function Map({ update, values }) {
         type: 'geojson'
       });
 
-      map1.current.addSource('LineStringPredicted', {
+      map.current.addSource('LineStringPredicted', {
         data: {
           geometry: {
             coordinates: curvedLineDataPointPredicted.current.geometry.coordinates,
@@ -79,7 +78,7 @@ function Map({ update, values }) {
         type: 'geojson'
       });
 
-      map1.current.addLayer({
+      map.current.addLayer({
         id: 'LineS_small_predicted',
         layout: {
           'line-cap': 'round',
@@ -87,14 +86,14 @@ function Map({ update, values }) {
         },
         paint: {
           'line-color': 'rgba(233, 14, 67, 0.7)',
-          'line-width': 7,
-          'line-dasharray': [1, 2]
+          'line-dasharray': [1, 2],
+          'line-width': 7
         },
         source: 'LineStringPredicted',
         type: 'line'
       });
 
-      map1.current.addLayer({
+      map.current.addLayer({
         id: 'LineS_small',
         layout: {
           'line-cap': 'round',
@@ -108,7 +107,7 @@ function Map({ update, values }) {
         type: 'line'
       });
 
-      map1.current.addSource('last', {
+      map.current.addSource('last', {
         data: {
           geometry: {
             coordinates: lineDataPoint[0],
@@ -120,13 +119,13 @@ function Map({ update, values }) {
         type: 'geojson'
       });
 
-      map1.current.loadImage(`${(window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './'}assets/img/bird2.png`, (error, image) => {
+      map.current.loadImage(`${(window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './'}assets/img/bird2.png`, (error, image) => {
         if (error) throw error;
-        // add image to the active style and make it SDF-enabled
-        map1.current.addImage('bird', image, { sdf: true });
+        // Add image to the active style and make it SDF-enabled
+        map.current.addImage('bird', image, { sdf: true });
       });
 
-      map1.current.addLayer(
+      map.current.addLayer(
         {
           id: 'bird',
           layout: {
@@ -144,12 +143,12 @@ function Map({ update, values }) {
       );
 
       // https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
-      // start by showing just the first coordinate
+      // Start by showing just the first coordinate
       tracedata.current = { type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: [] } }] };
       tracedata.current.features[0].geometry.coordinates = [curvedLineDataPoint.current.geometry.coordinates[0]];
-      // // add it to the map
-      map1.current.addSource('trace', { type: 'geojson', data: tracedata.current });
-      map1.current.addLayer({
+      // Add it to the map
+      map.current.addSource('trace', { type: 'geojson', data: tracedata.current });
+      map.current.addLayer({
         id: 'trace',
         type: 'line',
         source: 'trace',
@@ -172,7 +171,7 @@ function Map({ update, values }) {
           .setLngLat(feature.geometry.coordinates)
           .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(
             `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
-          )).addTo(map1.current);
+          )).addTo(map.current);
       });
     });
   }, []);
@@ -221,15 +220,15 @@ function Map({ update, values }) {
       properties: {},
       type: 'Feature'
     };
-    map1.current.on('load', () => {
-      map1.current.setLayoutProperty('bird', 'icon-rotate', calculateBearing(lineDataPoint[lineDataPoint.length - 2], lineDataPoint[lineDataPoint.length - 1]));
-      map1.current.getSource('last').setData(lastData);
+    map.current.on('load', () => {
+      map.current.setLayoutProperty('bird', 'icon-rotate', calculateBearing(lineDataPoint[lineDataPoint.length - 2], lineDataPoint[lineDataPoint.length - 1]));
+      map.current.getSource('last').setData(lastData);
     });
   }, [cleanFlightData, data]);
 
   useEffect(() => {
     if (update === true) {
-      if (map1.current) map1.current.resize();
+      if (map.current) map.current.resize();
     }
   }, [update]);
 
@@ -247,7 +246,7 @@ function Map({ update, values }) {
           {' '}
           km
         </div>
-        <div ref={map1Container} className="main_map" />
+        <div ref={mapContainer} className="main_map" />
       </div>
       <p className="updated_info">
         Tiedot päivitetty:
