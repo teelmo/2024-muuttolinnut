@@ -52,6 +52,7 @@
   "dependencies": {
     "@turf/turf": "^6.5.0",
     "mapbox-gl": "2.11",
+    "scroll-into-view": "^1.16.2",
     "uuid": "^9.0.1",
     "uuid4": "^2.0.3"
   }

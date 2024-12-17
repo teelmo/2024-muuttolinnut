@@ -24,7 +24,4 @@ Live.propTypes = {
   data: PropTypes.array.isRequired
 };
 
-Live.defaultProps = {
-};
-
 export default Live;

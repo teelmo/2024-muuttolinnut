@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 
 import '../../styles/styles.less';
 
+// eslint-disable-next-line
+import scrollIntoView from 'scroll-into-view';
+
 // https://www.npmjs.com/package/mapbox-gl
 import mapboxgl from 'mapbox-gl';
 // https://turfjs.org/getting-started/
@@ -20,8 +23,42 @@ function Map({ update, values }) {
   const [data, setData] = useState(false);
   const [odometer, setOdometer] = useState(0);
 
-  // eslint-disable-next-line
-  const tracedata = useRef({ 'type': 'FeatureCollection', 'features': [{ 'type': 'Feature', 'properties': {}, 'geometry': { 'type': 'LineString', 'coordinates': [] } }] });
+  const encodeFirstNumber = (inputString) => {
+    // Check if the first character is a digit
+    if (/^\d/.test(inputString)) {
+      // Get the first character
+      const firstChar = inputString.charAt(0);
+      // Encode the number (digit to encoded form: \3X where X is the digit)
+      const encoded = `\\3${firstChar} `;
+      // Replace the first character with its encoded form
+      return encoded + inputString.slice(1);
+    }
+    // If the first character is not a digit, return the input string unchanged
+    return inputString;
+  };
+
+  const scrollTo = useCallback((target) => {
+    target = encodeFirstNumber(target);
+    const element = document.querySelector(`#${target}`);
+    if (element) {
+      setTimeout(() => {
+        scrollIntoView(element, {
+          align: {
+            left: 0,
+            leftOffset: 0,
+            lockX: false,
+            lockY: false,
+            top: 0,
+            topOffset: 30
+          },
+          cancellable: false,
+          time: 1000
+        });
+      }, 50);
+    }
+  }, []);
+
+  const tracedata = useRef({ type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: [] } }] });
   const curvedLineDataPoint = useRef([]);
   const curvedLineDataPointPredicted = useRef([]);
   const map = useRef(false);
@@ -50,8 +87,9 @@ function Map({ update, values }) {
       container: mapContainer.current,
       language: 'fi',
       style: 'mapbox://styles/mapbox/satellite-streets-v11', // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-      zoom: 4 // Starting zoom
+      zoom: 3 // Starting zoom
     });
+    map.current.scrollZoom.disable();
     map.current.on('load', () => {
       map.current.addControl(new mapboxgl.NavigationControl());
       map.current.addSource('LineString', {
@@ -166,15 +204,31 @@ function Map({ update, values }) {
       result_data[0].map_markers_example.forEach((feature) => {
         const el = document.createElement('div');
         el.className = 'marker';
+        if (feature.properties.post_id === '64-3-251104') {
+          const divElement = document.createElement('div');
+          divElement.innerHTML = `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`;
 
-        new mapboxgl.Marker(el)
-          .setLngLat(feature.geometry.coordinates)
-          .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(
-            `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
-          )).addTo(map.current);
+          const buttonContainer = document.createElement('div');
+          buttonContainer.innerHTML = `<button data-id=${feature.properties.post_id}>Mene postaukseen</button>`;
+          divElement.appendChild(buttonContainer);
+
+          buttonContainer.querySelector('button').addEventListener('click', (e) => {
+            scrollTo(e.currentTarget.dataset.id);
+          });
+          new mapboxgl.Marker(el)
+            .setLngLat(feature.geometry.coordinates)
+            .setPopup(new mapboxgl.Popup({ offset: 25 }).setDOMContent(divElement)).addTo(map.current);
+        } else {
+          const marker = new mapboxgl.Marker(el)
+            .setLngLat(feature.geometry.coordinates).addTo(map.current);
+          // Attach event listener to raw HTML element
+          marker.getElement().addEventListener('click', () => {
+            scrollTo(feature.properties.post_id);
+          });
+        }
       });
     });
-  }, []);
+  }, [scrollTo]);
 
   const cleanFlightData = useCallback((result) => {
     const lineDataPoint = [];
@@ -187,10 +241,12 @@ function Map({ update, values }) {
     });
     const lineDataPointPredicted = [];
     result[1].predicted.forEach((map_point) => {
-      const pointDate = new Date(map_point.d);
+      if (map_point.y !== 0 || map_point.x !== 0) {
+        const pointDate = new Date(map_point.d);
 
-      if (pointDate.getFullYear() >= 2019 && pointDate.getMonth() >= 1) {
-        lineDataPointPredicted.push([map_point.y, map_point.x]);
+        if (pointDate.getFullYear() >= 2019 && pointDate.getMonth() >= 1) {
+          lineDataPointPredicted.push([map_point.y, map_point.x]);
+        }
       }
     });
     curvedLineDataPoint.current = turf.bezierSpline(turf.lineString(lineDataPoint), {
@@ -239,7 +295,7 @@ function Map({ update, values }) {
   }, [data, loadMap]);
 
   return (
-    <div className="map_wrapper">
+    <div className="map_wrapper" id="kartta">
       <div className="maps_container">
         <div className="odometer">
           {odometer}
@@ -262,9 +318,6 @@ Map.propTypes = {
   update: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   values: PropTypes.array.isRequired
-};
-
-Map.defaultProps = {
 };
 
 export default Map;
