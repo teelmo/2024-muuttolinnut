@@ -18,7 +18,7 @@ function App() {
       values = Promise.all([
         fetch(`${baseURL}assets/data/info.json`),
         // fetch(`${baseURL}assets/data/route.json`)
-        fetch(`${baseURL}assets/data/partial_route.json`)
+        fetch(`${baseURL}assets/data/route.json`)
         // fetch(`${dataURL}`)
       ]).then(results => Promise.all(results.map(result => result.json())));
     } catch (error) {
