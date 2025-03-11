@@ -23,40 +23,40 @@ function Map({ update, values }) {
   const [data, setData] = useState(false);
   const [odometer, setOdometer] = useState(0);
 
-  const encodeFirstNumber = (inputString) => {
-    // Check if the first character is a digit
-    if (/^\d/.test(inputString)) {
-      // Get the first character
-      const firstChar = inputString.charAt(0);
-      // Encode the number (digit to encoded form: \3X where X is the digit)
-      const encoded = `\\3${firstChar} `;
-      // Replace the first character with its encoded form
-      return encoded + inputString.slice(1);
-    }
-    // If the first character is not a digit, return the input string unchanged
-    return inputString;
-  };
+  // const encodeFirstNumber = (inputString) => {
+  //   // Check if the first character is a digit
+  //   if (/^\d/.test(inputString)) {
+  //     // Get the first character
+  //     const firstChar = inputString.charAt(0);
+  //     // Encode the number (digit to encoded form: \3X where X is the digit)
+  //     const encoded = `\\3${firstChar} `;
+  //     // Replace the first character with its encoded form
+  //     return encoded + inputString.slice(1);
+  //   }
+  //   // If the first character is not a digit, return the input string unchanged
+  //   return inputString;
+  // };
 
-  const scrollTo = useCallback((target) => {
-    target = encodeFirstNumber(target);
-    const element = document.querySelector(`#${target}`);
-    if (element) {
-      setTimeout(() => {
-        scrollIntoView(element, {
-          align: {
-            left: 0,
-            leftOffset: 0,
-            lockX: false,
-            lockY: false,
-            top: 0,
-            topOffset: 30
-          },
-          cancellable: false,
-          time: 1000
-        });
-      }, 50);
-    }
-  }, []);
+  // const scrollTo = useCallback((target) => {
+  //   target = encodeFirstNumber(target);
+  //   const element = document.querySelector(`#${target}`);
+  //   if (element) {
+  //     setTimeout(() => {
+  //       scrollIntoView(element, {
+  //         align: {
+  //           left: 0,
+  //           leftOffset: 0,
+  //           lockX: false,
+  //           lockY: false,
+  //           top: 0,
+  //           topOffset: 30
+  //         },
+  //         cancellable: false,
+  //         time: 1000
+  //       });
+  //     }, 50);
+  //   }
+  // }, []);
 
   const tracedata = useRef({ type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: [] } }] });
   const curvedLineDataPoint = useRef([]);
@@ -201,52 +201,48 @@ function Map({ update, values }) {
         }
       });
       // https://docs.mapbox.com/help/tutorials/custom-markers-gl-js/
-      result_data[0].map_markers_example.forEach((feature) => {
+      result_data[0].map_markers.forEach((feature) => {
         const el = document.createElement('div');
         el.className = 'marker';
-        if (feature.properties.post_id === '64-3-251104') {
-          const divElement = document.createElement('div');
-          divElement.innerHTML = `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`;
+        // if (feature.properties.post_id === '64-3-251104') {
+        const divElement = document.createElement('div');
+        divElement.innerHTML = `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`;
 
-          const buttonContainer = document.createElement('div');
-          buttonContainer.innerHTML = `<button data-id=${feature.properties.post_id}>Mene postaukseen</button>`;
-          divElement.appendChild(buttonContainer);
+        const buttonContainer = document.createElement('div');
+        // buttonContainer.innerHTML = `<button data-id=${feature.properties.post_id}>Mene postaukseen</button>`;
+        divElement.appendChild(buttonContainer);
 
-          buttonContainer.querySelector('button').addEventListener('click', (e) => {
-            scrollTo(e.currentTarget.dataset.id);
-          });
-          new mapboxgl.Marker(el)
-            .setLngLat(feature.geometry.coordinates)
-            .setPopup(new mapboxgl.Popup({ offset: 25 }).setDOMContent(divElement)).addTo(map.current);
-        } else {
-          const marker = new mapboxgl.Marker(el)
-            .setLngLat(feature.geometry.coordinates).addTo(map.current);
-          // Attach event listener to raw HTML element
-          marker.getElement().addEventListener('click', () => {
-            scrollTo(feature.properties.post_id);
-          });
-        }
+        // buttonContainer.querySelector('button').addEventListener('click', (e) => {
+        //   scrollTo(e.currentTarget.dataset.id);
+        // });
+        new mapboxgl.Marker(el)
+          .setLngLat(feature.geometry.coordinates)
+          .setPopup(new mapboxgl.Popup({ offset: 25 }).setDOMContent(divElement)).addTo(map.current);
+        // } else {
+        //   const marker = new mapboxgl.Marker(el)
+        //     .setLngLat(feature.geometry.coordinates).addTo(map.current);
+        //   // Attach event listener to raw HTML element
+        //   marker.getElement().addEventListener('click', () => {
+        //     scrollTo(feature.properties.post_id);
+        //   });
+        // }
       });
     });
-  }, [scrollTo]);
+  }, [/* scrollTo */]);
 
   const cleanFlightData = useCallback((result) => {
     const lineDataPoint = [];
-    result[1]['JX.1442466'].forEach((map_point) => {
-      const pointDate = new Date(map_point.d);
+    result[1].data.forEach((map_point) => {
+      const pointDate = new Date(map_point.timestamp);
 
       if (pointDate.getFullYear() >= 2019 && pointDate.getMonth() >= 1) {
-        lineDataPoint.push([map_point.y, map_point.x]);
+        lineDataPoint.push([map_point['location-long'], map_point['location-lat']]);
       }
     });
     const lineDataPointPredicted = [];
     result[1].predicted.forEach((map_point) => {
       if (map_point.y !== 0 || map_point.x !== 0) {
-        const pointDate = new Date(map_point.d);
-
-        if (pointDate.getFullYear() >= 2019 && pointDate.getMonth() >= 1) {
-          lineDataPointPredicted.push([map_point.y, map_point.x]);
-        }
+        lineDataPointPredicted.push([map_point.y, map_point.x]);
       }
     });
     curvedLineDataPoint.current = turf.bezierSpline(turf.lineString(lineDataPoint), {
@@ -307,7 +303,10 @@ function Map({ update, values }) {
       <p className="updated_info">
         Tiedot päivitetty:
         {' '}
-        {`${(new Date(values[1].updated)).getDate()}.${(new Date(values[1].updated)).getMonth() + 1}.${(new Date(values[1].updated)).getFullYear()}`}
+        {
+          console.log(values[1])
+        }
+        {`${(new Date(values[1].data[values[1].data.length - 1].timestamp)).getDate()}.${(new Date(values[1].data[values[1].data.length - 1].timestamp)).getMonth() + 1}.${(new Date(values[1].data[values[1].data.length - 1].timestamp)).getFullYear()}`}
       </p>
       <noscript>Your browser does not support JavaScript!</noscript>
     </div>
@@ -316,8 +315,7 @@ function Map({ update, values }) {
 
 Map.propTypes = {
   update: PropTypes.bool.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  values: PropTypes.array.isRequired
+  values: PropTypes.instanceOf(Array).isRequired,
 };
 
 export default Map;

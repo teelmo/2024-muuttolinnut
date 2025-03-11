@@ -15,34 +15,110 @@
     "text": ["Apulaisoikeuskansleri näyttää vihreä valoa hallituksen itärajaa koskeville suunnitelmille. Hallitus käsittelee rajanylitysliikenteen rajoituksia valtioneuvoston yleisistunnossa illan aikana.","Esitystä koskeva päätösluonnos ja muistioluonnos toimitettiin oikeuskanslerinvirastoon tänään."],
     "title":"Lintu ohittaa toisen sähköjohdon"
   }],
-  "map_markers":[],
-  "map_markers_example":[
+  "map_markers":[
     {
       "type": "Feature",
       "geometry": {
-        "coordinates": [21.5, 40.7],
+        "coordinates": [32.775362, -0.973781],
         "type": "Point"
       },
       "properties": {
-        "description": "Tähän joku summaus. Kuva?",
+        "description": "Selkälokkimme talvehtimisalue on Victoriajärvi, joka sijaitsee Tansanian, Ugandan ja Kenian alueella. Siellä lokit viettävät talven kalastellen auringonnousun ja -laskun hetkinä. Päivällä on nimittäin liian kirkasta ja yöllä liian pimeää onnistuneeseen saalistukseen. Talvehtimispaikassa on omat vaaransa, suurimpana niistä ympäristömyrkyt. Victoriajärvi on erittäin saastunut ja järven ympäristömyrkyt siirtyvät aikuisista linnuista niiden poikasiin. Myrkyt ovat yksi syy selkälokin uhanalaisuuteen.",
         "img":"",
         "img_alt":"",
-        "post_id":"64-3-251107",
-        "title": "Sudan"
+        "post_id":"",
+        "title": "Victoriajärvi"
       }
-    },
-    {
+    },{
       "type": "Feature",
       "geometry": {
-        "coordinates": [23.8813, 55.1694],
+        "coordinates": [33.6169029, 27.1924082],
         "type": "Point"
       },
       "properties": {
-        "description": "Tähän joku summaus. Kuva?",
+        "description": "Tuulivoimalan lapaan törmääminen on yksi vaara selkälokkimme muuttomatkalla. Egyptin itärannikolla on useita tuulivoimapuistoja, joihin muuttolinnut usein päätyvät tuulten ja maaston muotojen takia. Toivottavasti lokkimme välttää törmäykset! Riski on onneksi pieni, mutta olemassa.",
         "img":"",
         "img_alt":"",
-        "post_id":"64-3-251104",
-        "title": "Uganda"
+        "post_id":"",
+        "title": "Hurghada"
+      }
+    },{
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [32.1506108, 31.2257723],
+        "type": "Point"
+      },
+      "properties": {
+        "description": "Saharan ylitys on linnulle melkoinen haaste. Tämä maailman suurin hiekka-aavikko ulottuu Egyptiin asti, mutta sen kuuluisat pyramidit jäävät selkälokilta näkemättä, kun linnun muuttoreitti kaartaa Punaisen meren rantaviivan tuntumassa kohti Suezin kanavaa. Vahvana lentäjänä selkälokki selviytyy aavikon ylilennosta ilman välilaskuja, mutta väsyneenäkin sen on pysyttävä tarkkaavaisena – linnun on varottava metsästäjien luoteja ja verkkopyydyksiä esimerkiksi Port Saidin kaupungin tuntumassa.",
+        "img":"",
+        "img_alt":"",
+        "post_id":"",
+        "title": "Suezin kanavan/Saharan ylitys"
+      }
+    },{
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [33.762643, 31.3994983],
+        "type": "Point"
+      },
+      "properties": {
+        "description": "Selkälokin lentoreitti voi muuttua kartalla yhtäkkiä kummalliseksi syheröksi, kun lintu lentää konfliktialueiden tuntumassa. Esimerkiksi Sudanissa ja Välimerellä Gazan, Israelin, Libanonin sekä Syyrian lähellä GPS-häirintä on toisinaan voimakasta ja voi vaikuttaa lähettimen signaaliin. Todellisuudessa lintu lentää melko suoraa reittiä. Sen kannattaa pysyä reilusti meren yllä, sillä sodissa kuolee ja vammautuu aina myös paljon eläimiä.",
+        "img":"",
+        "img_alt":"",
+        "post_id":"",
+        "title": "Lähi-Itä"
+      }
+    },{
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [28.847374, 41.0052041],
+        "type": "Point"
+      },
+      "properties": {
+        "description": "Selkälokkimme oletettu muuttoreitti viistää Mustanmeren länsirantaa. Reitti sivuaa myös 15 miljoonan asukkaan Istanbulia. Tämä turkkilainen Euroopan ja Aasian väliin levittäytyvä suurkaupunki näyttää lokin silmissä varmasti loputtomalta. Kohta selkälokki alkaa lähestyä jo vuoristoista Eurooppaa.",
+        "img":"",
+        "img_alt":"",
+        "post_id":"",
+        "title": "Istanbul ja vuoristoinen Eurooppa"
+      }
+    },{
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [25.5140629, 45.6524485],
+        "type": "Point"
+      },
+      "properties": {
+        "description": "Selkälokkien reitti menee luultavasti Karpaattien vuoriston yli Romanian kohdalla. Varsinkin pikkulinnuille korkean vuoriston ylittäminen on raskas urakka, joten ne pyrkivät usein kiertämään vuoristot. Selkälokkimme on kuitenkin taitava lentäjä, joka pyyhältää vuoristojen yli kiertäen ehkäpä vain kaikkein korkeimmat huiput.",
+        "img":"",
+        "img_alt":"",
+        "post_id":"",
+        "title": "Karpaatit"
+      }
+    },{
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [18.1265422, 54.4273218],
+        "type": "Point"
+      },
+      "properties": {
+        "description": "Välillä selkälokkimme saattaa pysähtyä lepäämään ja tankkaamaan ravintoa. Puolan rannikko on lokillemme oiva hengailupaikka. Eteläisen itämeren rantaan voi jäädä hetkeksi kalastamaan ja toipumaan lentomatkan rasituksista. Edelleen muuttomatkan uhkana on ampuminen. Monet ihmiset näkevät lokit virheellisesti tuholaisina ja niitä voidaan ampua esimerkiksi kalankasvatuslaitoksilla.",
+        "img":"",
+        "img_alt":"",
+        "post_id":"",
+        "title": "Puolan rannikko"
+      }
+    },{
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [20.3821305, 54.7115816],
+        "type": "Point"
+      },
+      "properties": {
+        "description": "Kaliningradin alueella saattaa olla odotettavissa GPS-häirintää. Se sekoittaa selkälokkimme satelliittidatan niin, että  lentoreittiin tulee omituista sykeröä, vaikka lintumme lentää alueen yli varsin suoraviivaisesti. Häirinnän takia voi olla, ettemme pysty seuraamaan lokkimme matkaa alueella. Lintu voi jopa hävitä välillä kartalta.",
+        "img":"",
+        "img_alt":"",
+        "post_id":"",
+        "title": "Kaliningrad"
       }
     }
   ]
