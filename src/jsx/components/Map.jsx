@@ -81,19 +81,11 @@ function Map({ update, values }) {
     const routeDistance = turf.lineDistance(curvedLineDataPoint.current);
     setOdometer(Math.round(routeDistance));
     map.current = new mapboxgl.Map({
-      // center: lineDataPoint[0], // starting position [lng, lat]
       center: [lineDataPoint[lineDataPoint.length - 1][0], lineDataPoint[lineDataPoint.length - 1][1] + 12.5], // starting position [lng, lat]
-      // config: {
-      //   // Initial configuration for the Mapbox Standard style set above. By default, its ID is `basemap`.
-      //   basemap: {
-      //     showRoadsAndTransit: false,
-      //     showPlaceLabels: false
-      //   }
-      // },
       container: mapContainer.current,
+      cooperativeGestures: true,
       language: 'fi',
       style: 'mapbox://styles/mapbox/satellite-streets-v12', // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-      // style: 'mapbox://styles/mapbox/satellite-streets-v12', // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
       zoom: 3 // Starting zoom
     });
     map.current.scrollZoom.disable();
