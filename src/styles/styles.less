@@ -33,12 +33,18 @@
             position: relative;
             z-index: 1;
             .marker {
-              background-image: url('../assets/img/285659_marker_map_icon.png');
-              background-size: cover;
-              border-radius: 50%;
+              background-image: url('../assets/img/marker.png');
+              background-size: 100% 100%;
               cursor: pointer;
-              height: 50px;
-              width: 50px;
+              height: 30px;
+              margin-bottom: 15px;
+              margin-left: 15px;
+              width: 30px;
+            }
+            .mapboxgl-popup-close-button {
+              font-size: 40px;
+              font-weight: bold;
+              outline: none;
             }
             .mapboxgl-popup {
               bottom: 0 !important;

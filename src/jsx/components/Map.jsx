@@ -80,13 +80,19 @@ function Map({ update, values }) {
   const createMap = useCallback((lineDataPoint, result_data) => {
     const routeDistance = turf.lineDistance(curvedLineDataPoint.current);
     setOdometer(Math.round(routeDistance));
-
     map.current = new mapboxgl.Map({
       // center: lineDataPoint[0], // starting position [lng, lat]
-      center: lineDataPoint[lineDataPoint.length - 1], // starting position [lng, lat]
+      center: [lineDataPoint[lineDataPoint.length - 1][0], lineDataPoint[lineDataPoint.length - 1][1] + 12.5], // starting position [lng, lat]
+      config: {
+        // Initial configuration for the Mapbox Standard style set above. By default, its ID is `basemap`.
+        basemap: {
+          showRoadsAndTransit: false,
+          showPlaceLabels: false
+        }
+      },
       container: mapContainer.current,
       language: 'fi',
-      style: 'mapbox://styles/mapbox/satellite-streets-v11', // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+      style: 'mapbox://styles/mapbox/satellite-streets-v12', // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
       zoom: 3 // Starting zoom
     });
     map.current.scrollZoom.disable();
@@ -101,6 +107,7 @@ function Map({ update, values }) {
           properties: {},
           type: 'Feature'
         },
+        lineMetrics: true,
         type: 'geojson'
       });
 
@@ -113,6 +120,7 @@ function Map({ update, values }) {
           properties: {},
           type: 'Feature'
         },
+        lineMetrics: true,
         type: 'geojson'
       });
 
@@ -123,9 +131,11 @@ function Map({ update, values }) {
           'line-join': 'round'
         },
         paint: {
-          'line-color': 'rgba(233, 14, 67, 0.7)',
+          // 'line-blur': 1,
+          'line-color': '#bb80ff',
           'line-dasharray': [1, 2],
-          'line-width': 7
+          'line-opacity': 1,
+          'line-width': 5
         },
         source: 'LineStringPredicted',
         type: 'line'
@@ -138,8 +148,19 @@ function Map({ update, values }) {
           'line-join': 'round'
         },
         paint: {
-          'line-color': 'rgba(87, 229, 222, 0.7)',
-          'line-width': 7
+          // 'line-blur': 1,
+          'line-color': '#3e1ee0',
+          'line-gradient': [
+            'interpolate',
+            ['linear'],
+            ['line-progress'],
+            0,
+            '#3e1ee0',
+            1,
+            '#d575ff'
+          ],
+          'line-opacity': 1,
+          'line-width': 5
         },
         source: 'LineString',
         type: 'line'
@@ -169,8 +190,8 @@ function Map({ update, values }) {
           layout: {
             'icon-allow-overlap': true,
             'icon-image': 'bird',
-            'icon-size': ['interpolate', ['linear'], ['zoom'], 4, 0.1, 8, 0.2],
-            'icon-rotate': calculateBearing(lineDataPoint[0], lineDataPoint[1])
+            'icon-rotate': calculateBearing(lineDataPoint[0], lineDataPoint[1]),
+            'icon-size': ['interpolate', ['linear'], ['zoom'], 4, 0.2, 8, 0.2]
           },
           paint: {
             'icon-color': '#fff'
@@ -232,17 +253,13 @@ function Map({ update, values }) {
 
   const cleanFlightData = useCallback((result) => {
     const lineDataPoint = [];
-    result[1].data.forEach((map_point) => {
-      const pointDate = new Date(map_point.timestamp);
-
-      if (pointDate.getFullYear() >= 2019 && pointDate.getMonth() >= 1) {
-        lineDataPoint.push([map_point['location-long'], map_point['location-lat']]);
-      }
+    result[1].individuals[0].locations.forEach((map_point) => {
+      lineDataPoint.push([map_point.location_long, map_point.location_lat]);
     });
     const lineDataPointPredicted = [];
-    result[1].predicted.forEach((map_point) => {
+    result[0].predicted.forEach((map_point) => {
       if (map_point.y !== 0 || map_point.x !== 0) {
-        lineDataPointPredicted.push([map_point.y, map_point.x]);
+        lineDataPointPredicted.push([map_point.x, map_point.y]);
       }
     });
     curvedLineDataPoint.current = turf.bezierSpline(turf.lineString(lineDataPoint), {
@@ -303,10 +320,7 @@ function Map({ update, values }) {
       <p className="updated_info">
         Tiedot päivitetty:
         {' '}
-        {
-          console.log(values[1])
-        }
-        {`${(new Date(values[1].data[values[1].data.length - 1].timestamp)).getDate()}.${(new Date(values[1].data[values[1].data.length - 1].timestamp)).getMonth() + 1}.${(new Date(values[1].data[values[1].data.length - 1].timestamp)).getFullYear()}`}
+        {`${(new Date(values[1].individuals[0].locations[values[1].individuals[0].locations.length - 1].timestamp)).getDate()}.${(new Date(values[1].individuals[0].locations[values[1].individuals[0].locations.length - 1].timestamp)).getMonth() + 1}.${(new Date(values[1].individuals[0].locations[values[1].individuals[0].locations.length - 1].timestamp)).getFullYear()}`}
       </p>
       <noscript>Your browser does not support JavaScript!</noscript>
     </div>
