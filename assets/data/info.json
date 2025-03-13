@@ -23,7 +23,7 @@
         "type": "Point"
       },
       "properties": {
-        "description": "Selkälokkimme talvehtimisalue on Victoriajärvi, joka sijaitsee Tansanian, Ugandan ja Kenian alueella. Siellä lokit viettävät talven kalastellen auringonnousun ja -laskun hetkinä. Päivällä on nimittäin liian kirkasta ja yöllä liian pimeää onnistuneeseen saalistukseen. Talvehtimispaikassa on omat vaaransa, suurimpana niistä ympäristömyrkyt. Victoriajärvi on erittäin saastunut ja järven ympäristömyrkyt siirtyvät aikuisista linnuista niiden poikasiin. Myrkyt ovat yksi syy selkälokin uhanalaisuuteen.",
+        "description": "Selkälokkimme talvehtimisalue on Victoriajärvi, joka sijaitsee Tansanian, Ugandan ja Kenian alueella. Siellä lokit viettävät talven kalastellen auringonnousun ja -laskun hetkinä. Talvehtimispaikassa on omat vaaransa, suurimpana niistä ympäristömyrkyt. Victoriajärvi on erittäin saastunut ja järven ympäristömyrkyt siirtyvät aikuisista linnuista niiden poikasiin. Myrkyt ovat yksi syy selkälokin uhanalaisuuteen.",
         "img":"",
         "img_alt":"",
         "post_id":"",
@@ -36,24 +36,24 @@
         "type": "Point"
       },
       "properties": {
-        "description": "Tuulivoimalan lapaan törmääminen on yksi vaara selkälokkimme muuttomatkalla. Egyptin itärannikolla on useita tuulivoimapuistoja, joihin muuttolinnut usein päätyvät tuulten ja maaston muotojen takia. Toivottavasti lokkimme välttää törmäykset! Riski on onneksi pieni, mutta olemassa.",
+        "description": "Tuulivoimalan lapaan törmääminen on kuolemanvaara selkälokkimme muuttomatkalla. Egyptin itärannikolla on useita tuulivoimapuistoja, joihin muuttolinnut usein päätyvät tuulten ja maaston muotojen takia. Toivottavasti lokkimme välttää törmäykset! Riski on onneksi pieni, mutta olemassa.",
         "img":"",
         "img_alt":"",
         "post_id":"",
-        "title": "Hurghada"
+        "title": "Egyptin tuulivoimapuistot"
       }
     },{
       "type": "Feature",
       "geometry": {
-        "coordinates": [32.1506108, 31.2257723],
+        "coordinates": [36.744456, 20.996681],
         "type": "Point"
       },
       "properties": {
-        "description": "Saharan ylitys on linnulle melkoinen haaste. Tämä maailman suurin hiekka-aavikko ulottuu Egyptiin asti, mutta sen kuuluisat pyramidit jäävät selkälokilta näkemättä, kun linnun muuttoreitti kaartaa Punaisen meren rantaviivan tuntumassa kohti Suezin kanavaa. Vahvana lentäjänä selkälokki selviytyy aavikon ylilennosta ilman välilaskuja, mutta väsyneenäkin sen on pysyttävä tarkkaavaisena – linnun on varottava metsästäjien luoteja ja verkkopyydyksiä esimerkiksi Port Saidin kaupungin tuntumassa.",
+        "description": "Saharan ylitys on yksi vaarallisimmista hetkistä selkälokkimme muuttomatkalla. Tämä maailman suurin hiekka-aavikko ulottuu Egyptiin asti. Vahvana lentäjänä selkälokki selviytyy aavikon ylilennosta ilman välilaskuja, se voi lentää päivässä jopa 1300 kilometriä. Väsyneenäkin selkälokin on pysyttävä tarkkaavaisena – sen on varottava metsästäjien luoteja.",
         "img":"14-svyle-45302531972ca8abd3",
         "img_alt":"",
         "post_id":"",
-        "title": "Suezin kanavan/Saharan ylitys"
+        "title": "Saharan ylitys"
       }
     },{
       "type": "Feature",
@@ -75,11 +75,11 @@
         "type": "Point"
       },
       "properties": {
-        "description": "Selkälokkimme oletettu muuttoreitti viistää Mustanmeren länsirantaa. Reitti sivuaa myös 15 miljoonan asukkaan Istanbulia. Tämä turkkilainen Euroopan ja Aasian väliin levittäytyvä suurkaupunki näyttää lokin silmissä varmasti loputtomalta. Kohta selkälokki alkaa lähestyä jo vuoristoista Eurooppaa.",
+        "description": "Selkälokkimme oletettu muuttoreitti viistää Mustanmeren länsirantaa. Reitti sivuaa myös 15 miljoonan asukkaan Istanbulia. Tämä turkkilainen Euroopan ja Aasian väliin levittäytyvä suurkaupunki näyttää lokin silmissä varmasti loputtomalta. Kohta selkälokki alkaa lähestyä jo vuoristoista Eurooppaa. ",
         "img":"",
         "img_alt":"",
         "post_id":"",
-        "title": "Istanbul ja vuoristoinen Eurooppa"
+        "title": "Istanbul"
       }
     },{
       "type": "Feature",
@@ -92,16 +92,16 @@
         "img":"",
         "img_alt":"",
         "post_id":"",
-        "title": "Karpaatit"
+        "title": "Karpaattien vuoristo"
       }
     },{
       "type": "Feature",
       "geometry": {
-        "coordinates": [18.1265422, 54.4273218],
+        "coordinates": [15.861929, 54.209616],
         "type": "Point"
       },
       "properties": {
-        "description": "Välillä selkälokkimme saattaa pysähtyä lepäämään ja tankkaamaan ravintoa. Puolan rannikko on lokillemme oiva hengailupaikka. Eteläisen itämeren rantaan voi jäädä hetkeksi kalastamaan ja toipumaan lentomatkan rasituksista. Edelleen muuttomatkan uhkana on ampuminen. Monet ihmiset näkevät lokit virheellisesti tuholaisina ja niitä voidaan ampua esimerkiksi kalankasvatuslaitoksilla.",
+        "description": "Välillä selkälokkimme saattaa pysähtyä lepäämään ja tankkaamaan ravintoa. Puolan rannikko on lokillemme oiva hengailupaikka. Eteläisen Itämeren rantaan voi jäädä hetkeksi kalastamaan ja toipumaan lentomatkan rasituksista. Edelleen muuttomatkan uhkana on ampuminen. Monet ihmiset näkevät lokit virheellisesti tuholaisina ja niitä voidaan ampua esimerkiksi kalankasvatuslaitoksilla.",
         "img":"",
         "img_alt":"",
         "post_id":"",
@@ -110,16 +110,40 @@
     },{
       "type": "Feature",
       "geometry": {
-        "coordinates": [20.3821305, 54.7115816],
+        "coordinates": [21.355093, 55.19981],
         "type": "Point"
       },
       "properties": {
-        "description": "Kaliningradin alueella saattaa olla odotettavissa GPS-häirintää. Se sekoittaa selkälokkimme satelliittidatan niin, että  lentoreittiin tulee omituista sykeröä, vaikka lintumme lentää alueen yli varsin suoraviivaisesti. Häirinnän takia voi olla, ettemme pysty seuraamaan lokkimme matkaa alueella. Lintu voi jopa hävitä välillä kartalta.",
+        "description": "Kaliningradin alueella saattaa olla odotettavissa GPS-häirintää. Se sekoittaa selkälokkimme satelliittidatan niin, että lentoreittiin tulee omituista sykeröä, vaikka lintumme lentää alueen yli varsin suoraviivaisesti. Häirinnän takia voi olla, ettemme pysty seuraamaan lokkimme matkaa alueella. Lintu voi jopa hävitä välillä kartalta.",
         "img":"",
         "img_alt":"",
         "post_id":"",
         "title": "Kaliningrad"
       }
+    },{
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [21.146007, 62.349044],
+        "type": "Point"
+      },
+      "properties": {
+        "description": "Viimein kotona! Selkälokkimme muuttomatkan määränpää on Kaskinen. Siellä se asettuu pesimään samaan paikkaan kuin viime vuonna, eli pienelle puuttomalle ulkoluodolle. Täällä saaristolintujen paratiisissa pesii pieni selkälokkiyhdyskunta ja paljon muita lintuja kuten sorsia, hanhia ja tiiroja.",
+        "img":"",
+        "img_alt":"",
+        "post_id":"",
+        "title": "Perillä!"
+      }
     }
+  ],
+  "predicted":[{
+    "y": -0.973781,"x":32.775362},{
+    "y": 20.996681,"x":36.744456},{
+    "y": 27.1924082,"x":33.6169029},{
+    "y": 31.3994983,"x":33.762643},{
+    "y": 41.0052041,"x":28.847374},{
+    "y": 45.6524485,"x":25.5140629},{
+    "y": 54.209616,"x":15.861929},{
+    "y": 55.19981,"x":21.355093},{
+    "y": 62.349044,"x":21.146007}
   ]
 }

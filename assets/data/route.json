@@ -29,13 +29,16 @@
 {"event-id":38517185714,"visible":"true","timestamp":"2025-03-11 03:48:35.000","location-long":32.15825653076172,"location-lat":-1.34127676486969,"acceleration-raw-x":43.0,"acceleration-raw-y":-249.0,"acceleration-raw-z":981.0,"bar:barometric-height":0.0,"battery-charge-percent":11,"battery-charging-current":0.0,"external-temperature":30.0,"gps:hdop":0.8,"gps:satellite-count":9,"gps-time-to-fix":68.92,"ground-speed":0.0,"heading":129.0,"height-above-msl":1140.0,"import-marked-outlier":"false","gls:light-level":0.0,"mag:magnetic-field-raw-x":0.434,"mag:magnetic-field-raw-y":0.015,"mag:magnetic-field-raw-z":0.471,"orn:transmission-protocol":"GPRS","tag-voltage":3714.0,"sensor-type":"gps","individual-taxon-canonical-name":"Larus fuscus","tag-local-identifier":243726,"individual-local-identifier":"243726 - Bådan 2","study-name":"Lesser Black-backed Gull – Yle – Finland"},
 {"event-id":38517185715,"visible":"true","timestamp":"2025-03-11 04:47:35.000","location-long":32.21360778808594,"location-lat":-1.383808612823486,"acceleration-raw-x":-85.0,"acceleration-raw-y":-227.0,"acceleration-raw-z":967.0,"bar:barometric-height":0.0,"battery-charge-percent":11,"battery-charging-current":0.0,"external-temperature":32.0,"gps:hdop":0.8,"gps:satellite-count":8,"gps-time-to-fix":8.76,"ground-speed":0.0,"heading":33.0,"height-above-msl":1132.0,"import-marked-outlier":"false","gls:light-level":756.0,"mag:magnetic-field-raw-x":0.423,"mag:magnetic-field-raw-y":-0.131,"mag:magnetic-field-raw-z":0.445,"orn:transmission-protocol":"GPRS","tag-voltage":3714.0,"sensor-type":"gps","individual-taxon-canonical-name":"Larus fuscus","tag-local-identifier":243726,"individual-local-identifier":"243726 - Bådan 2","study-name":"Lesser Black-backed Gull – Yle – Finland"}],
 "predicted":[{
-  "x":-0.973781,"y":32.775362},{
-  "x":27.1924082,"y":33.6169029},{
-  "x":31.2257723,"y":32.1506108},{
-  "x":31.3994983,"y":33.762643},{
-  "x":41.0052041,"y":28.847374},{
-  "x":45.6524485,"y":25.5140629},{
-  "x":54.4273218,"y":18.1265422},{
-  "x":54.7115816,"y":20.3821305}],
+  "y": -0.973781,"x":32.775362},{
+  "y": 20.996681,"x":36.744456},{
+  "y": 27.1924082,"x":33.6169029},{
+  "y": 31.3994983,"x":33.762643},{
+  "y": 41.0052041,"x":28.847374},{
+  "y": 45.6524485,"x":25.5140629},{
+  "y": 54.209616,"x":15.861929},{
+  "y": 55.19981,"x":21.355093},{
+  "y": 62.349044,"x":21.146007}],
 "updated":"2025-03-10T09:00:08+00:00"
 }
+
+
