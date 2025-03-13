@@ -93,6 +93,7 @@ function Map({ update, values }) {
       container: mapContainer.current,
       language: 'fi',
       style: 'mapbox://styles/mapbox/satellite-streets-v12', // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+      // style: 'mapbox://styles/mapbox/satellite-streets-v12', // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
       zoom: 3 // Starting zoom
     });
     map.current.scrollZoom.disable();
