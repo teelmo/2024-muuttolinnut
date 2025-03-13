@@ -83,13 +83,13 @@ function Map({ update, values }) {
     map.current = new mapboxgl.Map({
       // center: lineDataPoint[0], // starting position [lng, lat]
       center: [lineDataPoint[lineDataPoint.length - 1][0], lineDataPoint[lineDataPoint.length - 1][1] + 12.5], // starting position [lng, lat]
-      config: {
-        // Initial configuration for the Mapbox Standard style set above. By default, its ID is `basemap`.
-        basemap: {
-          showRoadsAndTransit: false,
-          showPlaceLabels: false
-        }
-      },
+      // config: {
+      //   // Initial configuration for the Mapbox Standard style set above. By default, its ID is `basemap`.
+      //   basemap: {
+      //     showRoadsAndTransit: false,
+      //     showPlaceLabels: false
+      //   }
+      // },
       container: mapContainer.current,
       language: 'fi',
       style: 'mapbox://styles/mapbox/satellite-streets-v12', // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
