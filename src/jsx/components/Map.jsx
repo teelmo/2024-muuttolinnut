@@ -229,9 +229,16 @@ function Map({ update, values }) {
         // buttonContainer.querySelector('button').addEventListener('click', (e) => {
         //   scrollTo(e.currentTarget.dataset.id);
         // });
-        new mapboxgl.Marker(el)
-          .setLngLat(feature.geometry.coordinates)
-          .setPopup(new mapboxgl.Popup({ offset: 25 }).setDOMContent(divElement)).addTo(map.current);
+        const marker = new mapboxgl.Marker(el)
+          .setLngLat(feature.geometry.coordinates);
+        const popup = new mapboxgl.Popup({ offset: 25 }).setDOMContent(divElement);
+        marker.setPopup(popup).addTo(map.current);
+        marker.getElement().addEventListener('click', () => {
+          document.querySelector('.pan_controls').style.display = 'none';
+        });
+        popup.on('close', () => {
+          document.querySelector('.pan_controls').style.display = 'block';
+        });
         // } else {
         //   const marker = new mapboxgl.Marker(el)
         //     .setLngLat(feature.geometry.coordinates).addTo(map.current);
@@ -339,13 +346,13 @@ function Map({ update, values }) {
           {' '}
           km
         </div>
+        <div ref={mapContainer} className="main_map" />
         <div className="pan_controls">
           <button className="pan_up" type="button" onClick={() => panMap('up')} aria-label="Pan north"><div><img src={`${(window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './'}assets/img/icn/up-arrow.png`} alt="" /></div></button>
           <button className="pan_down" type="button" onClick={() => panMap('down')} aria-label="Pan south"><div><img src={`${(window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './'}assets/img/icn/down-arrow.png`} alt="" /></div></button>
           <button className="pan_left" type="button" onClick={() => panMap('left')} aria-label="Pan east"><div><img src={`${(window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './'}assets/img/icn/left-arrow.png`} alt="" /></div></button>
           <button className="pan_right" type="button" onClick={() => panMap('right')} aria-label="Pan west"><div><img src={`${(window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './'}assets/img/icn/right-arrow.png`} alt="" /></div></button>
         </div>
-        <div ref={mapContainer} className="main_map" />
       </div>
       <p className="updated_info">
         Tiedot päivitetty:

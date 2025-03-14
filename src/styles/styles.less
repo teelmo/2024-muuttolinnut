@@ -31,7 +31,7 @@
           .main_map {
             height: 600px;
             position: relative;
-            z-index: 1;
+            z-index: 3;
             .marker {
               background-image: url('../assets/img/marker.png');
               background-size: 100% 100%;
@@ -46,12 +46,16 @@
               font-weight: bold;
               outline: none;
             }
+            .mapboxgl-popup-tip {
+              display: none;
+            }
             .mapboxgl-popup {
               bottom: 0 !important;
               display: block !important;
               left: 0 !important;
               max-width: 100% !important;
               position: absolute !important;
+              z-index: 5;
               transform: none !important;
               width: 100%;
               .mapboxgl-popup-content {
@@ -59,8 +63,9 @@
                 border-radius: 0;
                 bottom: 0;
                 box-sizing: border-box;
-                padding: 10px 20px 40px 20px;
+                padding: 20px 20px 20px 20px;
                 position: absolute;
+                z-index: 5;
                 text-align: left;
                 width: 100%;
                 h3 {
@@ -88,10 +93,8 @@
           }
           .pan_controls {
             bottom: 25px;
-            height: 80px;
             position: absolute;
             right: 10px;
-            width: 80px;
             z-index: 3;
             button {
               background-color: #fff;
