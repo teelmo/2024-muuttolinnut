@@ -1,13 +1,11 @@
 @import 'colors.less';
 @import 'mapbox-gl.css';
-body {
-  touch-action: manipulation;
-}
 #app-root-2024-muuttolinnut .app {
   font-family: 'Yle Next', sans-serif;
   font-size: 18px;
   letter-spacing: 0px;
   line-height: 21px;
+  touch-action: auto !important;
   .container {
     box-sizing: border-box;
     margin: auto auto;
@@ -87,6 +85,71 @@ body {
             position: absolute;
             top: 0;
             z-index: 3;
+          }
+          .pan_controls {
+            bottom: 25px;
+            height: 80px;
+            position: absolute;
+            right: 10px;
+            width: 80px;
+            z-index: 3;
+            button {
+              background-color: #fff;
+              border-radius: 20px;
+              border: 0;
+              bottom: 0;
+              box-shadow: 1px 1px 10px #999;
+              cursor: pointer;
+              height: 40px;
+              margin: 0;
+              outline: none;
+              padding: 0;
+              position: absolute;
+              right: 0;
+              width: 40px;
+              &:hover {
+                background-color: #00b4c8;
+              }
+              &.pan_up {
+                bottom: 70px;
+                right: 30px;
+                img {
+                  margin-bottom: 5px;
+                }
+              }
+              &.pan_left {
+                bottom: 35px;
+                right: 60px;
+                img {
+                  margin-right: 5px;
+                }
+              }
+              &.pan_right {
+                bottom: 35px;
+                img {
+                  margin-left: 5px;
+                }
+              }
+              &.pan_down {
+                bottom: 0px;
+                right: 30px;
+                img {
+                  margin-top: 5px;
+                }
+              }
+              div {
+                align-content: center;
+                align-items: center;
+                display: flex;
+                height: 40px;
+                justify-content: center;
+                width: 40px;
+                img {
+                  height: 25px;
+                  width: 25px;
+                }
+              }
+            }
           }
         }
         .updated_info {

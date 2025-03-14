@@ -90,7 +90,7 @@ function Map({ update, values }) {
     });
     map.current.scrollZoom.disable();
     map.current.on('load', () => {
-      map.current.addControl(new mapboxgl.NavigationControl());
+      map.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }));
       map.current.addSource('LineString', {
         data: {
           geometry: {
@@ -286,6 +286,15 @@ function Map({ update, values }) {
       map.current.setLayoutProperty('bird', 'icon-rotate', calculateBearing(lineDataPoint[lineDataPoint.length - 2], lineDataPoint[lineDataPoint.length - 1]));
       map.current.getSource('last').setData(lastData);
     });
+    map.current.boxZoom.enable(); // Enable `box zoom` interaction
+    map.current.doubleClickZoom.enable(); // Enable `double click to zoom` interaction
+    map.current.dragPan.enable(); // Enable `drag to pan` interaction
+    map.current.keyboard.enable(); // Enable `keyboard rotate and zoom` interaction
+    map.current.keyboard.disableRotation(); // Disable `keyboard pan/rotate` interaction
+    map.current.scrollZoom.enable(); // Enable `scroll to zoom` interaction
+    map.current.touchPitch.enable();
+    map.current.touchZoomRotate.enable(); // Enable `pinch to rotate and zoom` interaction
+    map.current.touchZoomRotate.disableRotation(); // Disable `pinch to rotate` interaction
   }, [cleanFlightData, data]);
 
   useEffect(() => {
@@ -300,6 +309,28 @@ function Map({ update, values }) {
     }
   }, [data, loadMap]);
 
+  const deltaDistance = 100;
+  const easing = (t) => t * (2 - t);
+  const panMap = (direction) => {
+    if (direction === 'up') {
+      map.current.panBy([0, -deltaDistance], {
+        easing
+      });
+    } else if (direction === 'down') {
+      map.current.panBy([0, deltaDistance], {
+        easing
+      });
+    } else if (direction === 'left') {
+      map.current.panBy([-deltaDistance, 0], {
+        easing
+      });
+    } else if (direction === 'right') {
+      map.current.panBy([deltaDistance, 0], {
+        easing
+      });
+    }
+  };
+
   return (
     <div className="map_wrapper" id="kartta">
       <div className="maps_container">
@@ -307,6 +338,12 @@ function Map({ update, values }) {
           {odometer}
           {' '}
           km
+        </div>
+        <div className="pan_controls">
+          <button className="pan_up" type="button" onClick={() => panMap('up')} aria-label="Pan north"><div><img src={`${(window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './'}assets/img/icn/up-arrow.png`} alt="" /></div></button>
+          <button className="pan_down" type="button" onClick={() => panMap('down')} aria-label="Pan south"><div><img src={`${(window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './'}assets/img/icn/down-arrow.png`} alt="" /></div></button>
+          <button className="pan_left" type="button" onClick={() => panMap('left')} aria-label="Pan east"><div><img src={`${(window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './'}assets/img/icn/left-arrow.png`} alt="" /></div></button>
+          <button className="pan_right" type="button" onClick={() => panMap('right')} aria-label="Pan west"><div><img src={`${(window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './'}assets/img/icn/right-arrow.png`} alt="" /></div></button>
         </div>
         <div ref={mapContainer} className="main_map" />
       </div>
