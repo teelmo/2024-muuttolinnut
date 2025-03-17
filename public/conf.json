@@ -1,0 +1,13 @@
+{
+  "mainfile": "dataviz.html",
+  "js": [
+    "js/2024-muuttolinnut.ac8d5c71388b01915c83.min.js"
+  ],
+  "css": [
+    "css/2024-muuttolinnut.9b55bb18567c472120e7.min.css",
+    "font/fonts.css"
+  ],
+  "darkMode": true,
+  "externalContent": true,
+  "darkModeCss": []
+}
