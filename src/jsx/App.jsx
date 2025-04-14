@@ -12,7 +12,7 @@ function App() {
 
   const fetchExternalData = () => {
     const baseURL = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './';
-    const dataURL = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2023_lintureitti/js/lintu_aws_2025.json' : 'https://www.movebank.org/movebank/service/public/json?study_id=5834114704&individual_local_identifiers=243726&sensor_type=gps&attributes=timestamp,location_long,location_lat,height_above_msl,ground_speed,gps_satellite_count,external_temperature';
+    const dataURL = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2023_lintureitti/js/lintu_aws_2025.json' : 'https://www.movebank.org/movebank/service/public/json?study_id=5834114704&individual_local_identifiers=243727&sensor_type=gps&attributes=timestamp,location_long,location_lat,height_above_msl,ground_speed,gps_satellite_count,external_temperature';
     let values;
     try {
       values = Promise.all([
@@ -125,7 +125,7 @@ function App() {
         }
 
         // Apply filtering before setting data
-        const cutoffTimestamp = new Date('2025-03-21T00:00:00Z').getTime();
+        const cutoffTimestamp = new Date('2025-03-18T00:00:00Z').getTime();
         result[1].individuals[0].locations = filterUnreliableLocations(
           result[1].individuals[0].locations.filter(el => el.timestamp > cutoffTimestamp)
         );
