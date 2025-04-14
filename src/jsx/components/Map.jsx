@@ -22,44 +22,12 @@ mapboxgl.accessToken = 'pk.eyJ1IjoieWxlaXNyYWRpbyIsImEiOiJjam90cTB4N3gxMGxjM3dsa
 function Map({ update, values }) {
   const [data, setData] = useState(false);
   const [odometer, setOdometer] = useState(0);
-
-  // const encodeFirstNumber = (inputString) => {
-  //   // Check if the first character is a digit
-  //   if (/^\d/.test(inputString)) {
-  //     // Get the first character
-  //     const firstChar = inputString.charAt(0);
-  //     // Encode the number (digit to encoded form: \3X where X is the digit)
-  //     const encoded = `\\3${firstChar} `;
-  //     // Replace the first character with its encoded form
-  //     return encoded + inputString.slice(1);
-  //   }
-  //   // If the first character is not a digit, return the input string unchanged
-  //   return inputString;
-  // };
-
-  // const scrollTo = useCallback((target) => {
-  //   target = encodeFirstNumber(target);
-  //   const element = document.querySelector(`#${target}`);
-  //   if (element) {
-  //     setTimeout(() => {
-  //       scrollIntoView(element, {
-  //         align: {
-  //           left: 0,
-  //           leftOffset: 0,
-  //           lockX: false,
-  //           lockY: false,
-  //           top: 0,
-  //           topOffset: 30
-  //         },
-  //         cancellable: false,
-  //         time: 1000
-  //       });
-  //     }, 50);
-  //   }
-  // }, []);
+  const [odometer2, setOdometer2] = useState(0);
 
   const tracedata = useRef({ type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: [] } }] });
+  const tracedata2 = useRef({ type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: [] } }] });
   const curvedLineDataPoint = useRef([]);
+  const curvedLineDataPoint2 = useRef([]);
   const curvedLineDataPointPredicted = useRef([]);
   const map = useRef(false);
   const mapContainer = useRef(null);
@@ -77,11 +45,13 @@ function Map({ update, values }) {
     return turf.radiansToDegrees(Math.atan2(a, b));
   };
 
-  const createMap = useCallback((lineDataPoint, result_data) => {
+  const createMap = useCallback((lineDataPoint, lineDataPoint2, result_data) => {
     const routeDistance = turf.lineDistance(curvedLineDataPoint.current);
+    const routeDistance2 = turf.lineDistance(curvedLineDataPoint2.current);
     setOdometer(Math.round(routeDistance));
+    setOdometer2(Math.round(routeDistance2));
     map.current = new mapboxgl.Map({
-      center: [lineDataPoint[lineDataPoint.length - 1][0], lineDataPoint[lineDataPoint.length - 1][1] + 12.5], // starting position [lng, lat]
+      center: [lineDataPoint2[lineDataPoint.length - 1][0], lineDataPoint2[lineDataPoint.length - 1][1] + 12.5], // starting position [lng, lat]
       container: mapContainer.current,
       cooperativeGestures: true,
       language: 'fi',
@@ -91,6 +61,8 @@ function Map({ update, values }) {
     map.current.scrollZoom.disable();
     map.current.on('load', () => {
       map.current.addControl(new mapboxgl.NavigationControl({ showCompass: false }));
+
+      // Bird 1
       map.current.addSource('LineString', {
         data: {
           geometry: {
@@ -103,11 +75,47 @@ function Map({ update, values }) {
         lineMetrics: true,
         type: 'geojson'
       });
-
-      map.current.addSource('LineStringPredicted', {
+      map.current.addLayer({
+        id: 'LineS_small',
+        layout: {
+          'line-cap': 'round',
+          'line-join': 'round'
+        },
+        paint: {
+          // 'line-blur': 1,
+          'line-color': '#f0f0f0',
+          'line-gradient': [
+            'interpolate',
+            ['linear'],
+            ['line-progress'],
+            0,
+            '#f0f0f0',
+            1,
+            '#cccccc'
+          ],
+          'line-opacity': 1,
+          'line-width': 5
+        },
+        source: 'LineString',
+        type: 'line'
+      });
+      map.current.addSource('last', {
         data: {
           geometry: {
-            coordinates: curvedLineDataPointPredicted.current.geometry.coordinates,
+            coordinates: lineDataPoint[0],
+            type: 'Point'
+          },
+          properties: {},
+          type: 'Feature'
+        },
+        type: 'geojson'
+      });
+
+      // Bird 2
+      map.current.addSource('LineString_2', {
+        data: {
+          geometry: {
+            coordinates: curvedLineDataPoint2.current.geometry.coordinates,
             type: 'LineString'
           },
           properties: {},
@@ -116,26 +124,8 @@ function Map({ update, values }) {
         lineMetrics: true,
         type: 'geojson'
       });
-
       map.current.addLayer({
-        id: 'LineS_small_predicted',
-        layout: {
-          'line-cap': 'round',
-          'line-join': 'round'
-        },
-        paint: {
-          // 'line-blur': 1,
-          'line-color': '#bb80ff',
-          'line-dasharray': [1, 2],
-          'line-opacity': 1,
-          'line-width': 5
-        },
-        source: 'LineStringPredicted',
-        type: 'line'
-      });
-
-      map.current.addLayer({
-        id: 'LineS_small',
+        id: 'LineS_small_2',
         layout: {
           'line-cap': 'round',
           'line-join': 'round'
@@ -155,20 +145,49 @@ function Map({ update, values }) {
           'line-opacity': 1,
           'line-width': 5
         },
-        source: 'LineString',
+        source: 'LineString_2',
         type: 'line'
       });
-
-      map.current.addSource('last', {
+      map.current.addSource('last2', {
         data: {
           geometry: {
-            coordinates: lineDataPoint[0],
+            coordinates: lineDataPoint2[0],
             type: 'Point'
           },
           properties: {},
           type: 'Feature'
         },
         type: 'geojson'
+      });
+
+      // Predicted
+      map.current.addSource('LineStringPredicted', {
+        data: {
+          geometry: {
+            coordinates: curvedLineDataPointPredicted.current.geometry.coordinates,
+            type: 'LineString'
+          },
+          properties: {},
+          type: 'Feature'
+        },
+        lineMetrics: true,
+        type: 'geojson'
+      });
+      map.current.addLayer({
+        id: 'LineS_small_predicted',
+        layout: {
+          'line-cap': 'round',
+          'line-join': 'round'
+        },
+        paint: {
+          // 'line-blur': 1,
+          'line-color': '#bb80ff',
+          'line-dasharray': [1, 2],
+          'line-opacity': 1,
+          'line-width': 5
+        },
+        source: 'LineStringPredicted',
+        type: 'line'
       });
 
       map.current.loadImage(`${(window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './'}assets/img/bird2.png`, (error, image) => {
@@ -194,14 +213,47 @@ function Map({ update, values }) {
         }
       );
 
+      map.current.addLayer(
+        {
+          id: 'bird2',
+          layout: {
+            'icon-allow-overlap': true,
+            'icon-image': 'bird',
+            'icon-rotate': calculateBearing(lineDataPoint2[0], lineDataPoint2[1]),
+            'icon-size': ['interpolate', ['linear'], ['zoom'], 4, 0.2, 8, 0.2]
+          },
+          paint: {
+            'icon-color': '#fff'
+          },
+          source: 'last2',
+          type: 'symbol'
+        }
+      );
+
       // https://docs.mapbox.com/mapbox-gl-js/example/live-update-feature/
       // Start by showing just the first coordinate
-      tracedata.current = { type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: [] } }] };
+      // tracedata.current = { type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: [] } }] };
       tracedata.current.features[0].geometry.coordinates = [curvedLineDataPoint.current.geometry.coordinates[0]];
+      tracedata2.current.features[0].geometry.coordinates = [curvedLineDataPoint2.current.geometry.coordinates[0]];
       // Add it to the map
       map.current.addSource('trace', { type: 'geojson', data: tracedata.current });
+      map.current.addSource('trace2', { type: 'geojson', data: tracedata2.current });
       map.current.addLayer({
         id: 'trace',
+        type: 'line',
+        source: 'trace',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        paint: {
+          'line-color': '#00b4ff',
+          'line-opacity': 1,
+          'line-width': 7
+        }
+      });
+      map.current.addLayer({
+        id: 'trace2',
         type: 'line',
         source: 'trace',
         layout: {
@@ -252,27 +304,38 @@ function Map({ update, values }) {
   }, [/* scrollTo */]);
 
   const cleanFlightData = useCallback((result) => {
+    // Bird 1
     const lineDataPoint = [];
     result[1].individuals[0].locations.forEach((map_point) => {
       lineDataPoint.push([map_point.location_long, map_point.location_lat]);
     });
+    curvedLineDataPoint.current = turf.bezierSpline(turf.lineString(lineDataPoint), {
+      sharpness: 0,
+      resolution: 60000
+    });
+    // Bird 2
+    const lineDataPoint2 = [];
+    result[2].individuals[0].locations.forEach((map_point) => {
+      lineDataPoint2.push([map_point.location_long, map_point.location_lat]);
+    });
+    curvedLineDataPoint2.current = turf.bezierSpline(turf.lineString(lineDataPoint2), {
+      sharpness: 0,
+      resolution: 60000
+    });
+    // Predicted
     const lineDataPointPredicted = [];
     result[0].predicted.forEach((map_point) => {
       if (map_point.y !== 0 || map_point.x !== 0) {
         lineDataPointPredicted.push([map_point.x, map_point.y]);
       }
     });
-    curvedLineDataPoint.current = turf.bezierSpline(turf.lineString(lineDataPoint), {
-      sharpness: 0,
-      resolution: 60000
-    });
     curvedLineDataPointPredicted.current = turf.bezierSpline(turf.lineString(lineDataPointPredicted), {
       sharpness: 0,
       resolution: 60000
     });
 
-    createMap(lineDataPoint, result);
-    return lineDataPoint;
+    createMap(lineDataPoint, lineDataPoint2, result);
+    return [lineDataPoint, lineDataPoint2];
   }, [createMap]);
 
   useEffect(() => {
@@ -280,7 +343,7 @@ function Map({ update, values }) {
   }, [values]);
 
   const loadMap = useCallback(() => {
-    const lineDataPoint = cleanFlightData(data);
+    const [lineDataPoint, lineDataPoint2] = cleanFlightData(data);
     const lastData = {
       geometry: {
         coordinates: lineDataPoint[lineDataPoint.length - 1],
@@ -289,9 +352,20 @@ function Map({ update, values }) {
       properties: {},
       type: 'Feature'
     };
+    const lastData2 = {
+      geometry: {
+        coordinates: lineDataPoint2[lineDataPoint2.length - 1],
+        type: 'Point'
+      },
+      properties: {},
+      type: 'Feature'
+    };
     map.current.on('load', () => {
       map.current.setLayoutProperty('bird', 'icon-rotate', calculateBearing(lineDataPoint[lineDataPoint.length - 2], lineDataPoint[lineDataPoint.length - 1]));
       map.current.getSource('last').setData(lastData);
+
+      map.current.setLayoutProperty('bird2', 'icon-rotate', calculateBearing(lineDataPoint2[lineDataPoint2.length - 2], lineDataPoint2[lineDataPoint2.length - 1]));
+      map.current.getSource('last2').setData(lastData2);
     });
     map.current.boxZoom.enable(); // Enable `box zoom` interaction
     map.current.doubleClickZoom.enable(); // Enable `double click to zoom` interaction
@@ -343,6 +417,11 @@ function Map({ update, values }) {
       <div className="maps_container">
         <div className="odometer">
           {odometer}
+          {' '}
+          km
+        </div>
+        <div className="odometer odometer2">
+          {odometer2}
           {' '}
           km
         </div>
