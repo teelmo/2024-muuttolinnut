@@ -436,7 +436,7 @@ function Map({ update, values }) {
       <p className="updated_info">
         Tiedot päivitetty:
         {' '}
-        {`${(new Date(values[1].individuals[0].locations[values[1].individuals[0].locations.length - 1].timestamp)).getDate()}.${(new Date(values[1].individuals[0].locations[values[1].individuals[0].locations.length - 1].timestamp)).getMonth() + 1}.${(new Date(values[1].individuals[0].locations[values[1].individuals[0].locations.length - 1].timestamp)).getFullYear()}`}
+        {`${(new Date(values[2].individuals[0].locations[values[2].individuals[0].locations.length - 1].timestamp)).getDate()}.${(new Date(values[2].individuals[0].locations[values[2].individuals[0].locations.length - 1].timestamp)).getMonth() + 1}.${(new Date(values[2].individuals[0].locations[values[2].individuals[0].locations.length - 1].timestamp)).getFullYear()}`}
       </p>
       <noscript>Your browser does not support JavaScript!</noscript>
     </div>
