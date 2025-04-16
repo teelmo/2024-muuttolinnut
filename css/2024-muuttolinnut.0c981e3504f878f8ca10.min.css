@@ -91,6 +91,7 @@
 #app-root-2024-muuttolinnut .app .container .content .map_wrapper .maps_container .odometer {
   background: rgba(255, 255, 255, 0.95);
   color: #000;
+  display: none;
   font-size: 20px;
   font-weight: 600;
   left: 0;
@@ -101,6 +102,7 @@
   z-index: 4;
 }
 #app-root-2024-muuttolinnut .app .container .content .map_wrapper .maps_container .odometer.odometer2 {
+  display: block;
   background-color: rgba(213, 117, 255, 0.95);
   color: #fff;
   top: 0;
