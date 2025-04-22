@@ -13,9 +13,11 @@ function App() {
   const fetchExternalData = () => {
     const baseURL = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/' : './';
     // const dataURL = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2023_lintureitti/js/lintu_aws_2025.json' : 'https://www.movebank.org/movebank/service/public/json?study_id=5834114704&individual_local_identifiers=243726&sensor_type=gps&attributes=timestamp,location_long,location_lat,height_above_msl,ground_speed,gps_satellite_count,external_temperature';
-    const dataURL = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2023_lintureitti/js/lintu_aws_2025.json' : './assets/data/bird.json';
+    // const dataURL = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2023_lintureitti/js/lintu_aws_2025.json' : './assets/data/bird.json';
+    const dataURL = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/assets/data/bird.json' : './assets/data/bird.json';
     // const dataURL2 = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2023_lintureitti/js/lintu_aws_2025_2.json' : 'https://www.movebank.org/movebank/service/public/json?study_id=5834114704&individual_local_identifiers=243727&sensor_type=gps&attributes=timestamp,location_long,location_lat,height_above_msl,ground_speed,gps_satellite_count,external_temperature';
-    const dataURL2 = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2023_lintureitti/js/lintu_aws_2025_2.json' : './assets/data/bird2.json';
+    // const dataURL2 = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2023_lintureitti/js/lintu_aws_2025_2.json' : './assets/data/bird2.json';
+    const dataURL2 = (window.location.href.includes('yle')) ? 'https://lusi-dataviz.ylestatic.fi/2024-muuttolinnut/assets/data/bird2.json' : './assets/data/bird2.json';
     let values;
     try {
       values = Promise.all([
